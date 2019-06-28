@@ -1,0 +1,20 @@
+{
+  "name": "PopupGallery",
+  "platform": "HTML",
+  "version": "0.1",
+  "wabVersion": "2.11",
+  "author": "GICHD / harry kendall",
+  "description": "popup image gallery for visualising multiple attachements",
+  "copyright": "GICHD",
+  "license": "http://www.apache.org/licenses/LICENSE-2.0",
+ 
+  
+  "properties": {
+    "inPanel": false,
+    "hasUIFile": false,
+    "closeable":false,
+    "hasConfig": true,
+    "hasStyle": true,
+    "supportMultiInstance": false
+  }
+}
