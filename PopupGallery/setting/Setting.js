@@ -45,8 +45,7 @@ function (declare, BaseWidgetSetting, lang, array, _WidgetsInTemplateMixin, Laye
         var infos = layerInfosObj.getLayerInfoArray();
         var options = [];
         array.forEach(infos, function(info) {
-          if(info.originOperLayer.layerType === 'ArcGISFeatureLayer') { 
-            // TODO - consider filtering to layers that have attachments.          
+          if(info.originOperLayer.layerType === 'ArcGISFeatureLayer' && info.originOperLayer.layerObject.hasAttachments) { 
             options.push({
               label: info.title,
               value: info.id
