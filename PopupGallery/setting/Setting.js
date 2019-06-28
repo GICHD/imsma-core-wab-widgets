@@ -17,50 +17,49 @@
 define([
   'dojo/_base/declare',
   'jimu/BaseWidgetSetting',
-  'dojo/on',
+  'dojo/_base/lang',
+  'dojo/_base/array',
+  'dijit/_WidgetsInTemplateMixin',
+  'jimu/LayerInfos/LayerInfos',
   'dijit/form/Select'
 
 ],
-function (declare, BaseWidgetSetting, On, Select) {
-  return declare([BaseWidgetSetting
+function (declare, BaseWidgetSetting, lang, array, _WidgetsInTemplateMixin, LayerInfos, Select) {
+  return declare([BaseWidgetSetting, _WidgetsInTemplateMixin
     // Select
   ], {
-    baseClass: 'jimu-widget-demo-setting',
+    baseClass: 'jimu-widget-popupgallery-setting',
 
     postCreate: function () {
+      this.setConfig(this.config);
     },
-    startup: function () {
-      // the config object is passed in
-      this.setConfig(this.config)
-
-      this.inherited(arguments)
-
-      var layers = this.map.graphicsLayerIds
-      var map = this.map
-      if (layers.length <= 0) {
-        console.log('no layers found')
-      } else {
-        var select = document.getElementById('layerIdselect')
-        var layerIdselect2 = document.getElementById('layerIdselect2')
-
-        for (var i = 0; i < layers.length; i++) {
-          // TODO: make this layer take the title if available else use the id in dropdown
-          if (false) { 
-            select.options[select.options.length] = new Option(this.map.getLayer(layers[i]).arcgisProps.title, layers[i])
-          } else {
-            select.options[select.options.length] = new Option(layers[i], layers[i])
-          }
-
-          console.log('loading layer options')
-        }
-      }
-    },
-
     // getConfig—to return the config data input by the user—and setConfig—to initialize the widget setting page depending on the widget config data.
 
     setConfig: function (config) {
-      this.layerId.value = config.layerId
-    },
+
+      // this.layerId.value = config.layerId
+
+      // Get all feature layers from the map
+      LayerInfos.getInstance(this.map, this.map.itemInfo)
+      .then(lang.hitch(this, function(layerInfosObj) {
+        var infos = layerInfosObj.getLayerInfoArray();
+        var options = [];
+        array.forEach(infos, function(info) {
+          if(info.originOperLayer.layerType === 'ArcGISFeatureLayer') { 
+            // TODO - consider filtering to layers that have attachments.          
+            options.push({
+              label: info.title,
+              value: info.id
+            });
+
+            // TODO - handle no layers on map. Give users an error nothing to
+            // seelect. 
+          }
+        });
+        this.layerId.set('options', options);
+
+    }));
+  },
 
     getConfig: function () {
       // WAB will get config object through this method

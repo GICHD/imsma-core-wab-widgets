@@ -37,9 +37,9 @@ function (declare, BaseWidget, $,
 
       // listen for click event to get objectid
       connect.connect(this.map.infoWindow, 'onSetFeatures', function () {
-        if (this.map.getLayer(LayerToAttachId) && this.map.getLayer(LayerToAttachId).hasAttachments) {
-          var attributeData = this.map.infoWindow.getSelectedFeature()
-          var featureLayer = this.map.getLayer(LayerToAttachId)
+        var featureLayer = this.map.getLayer(LayerToAttachId)
+        if (featureLayer && featureLayer.hasAttachments) {
+          var attributeData = this.map.infoWindow.getSelectedFeature()          
           var fieldlist = featureLayer.fields
 
           for (var i = 0; fieldlist.length; i++) { // TODO make this use number of fields
