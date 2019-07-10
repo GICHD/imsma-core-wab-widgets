@@ -57,12 +57,14 @@ function (declare, BaseWidget, $,
           featureLayer.queryAttachmentInfos(attributeData.attributes[idfield], function (infos) {
             console.log('querying for image attachments')
             // preparing div for fancybox
-            $('.contentPane').append('<div id="initialImageDiv"></div><div id="otherImagesDiv" style="display:none"></div>')
+             $('.contentPane').append('<div id="initialImageDiv">No attachments found</div><div id="otherImagesDiv" style="display:none"></div>')
             // count to show only first image in popup for intiial viewing
             i = 0
             infos.forEach(function (photoInfo) {
               if (i === 0) {
                 // initialImageDiv append
+				$('#initialImageDiv').html('')
+
                 $('#initialImageDiv').append('<a data-fancybox="gallery" href="' + photoInfo.url + '"><img src="' + photoInfo.url + '"></a>')
                 i = 1
               } else {
