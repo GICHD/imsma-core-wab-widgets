@@ -13,7 +13,7 @@ To use the widgets you need either;
 
 * GalleryPopup
   See attachments in a popup gallery carousel. 
-  ![GIF showing popup](Popup_Example.gif)
+  ![GIF showing popup](./Popup_Example.gif)
 
 
 ### How to use the widgets
