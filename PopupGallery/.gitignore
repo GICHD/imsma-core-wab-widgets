@@ -1,0 +1,9 @@
+/vendor
+/node_modules
+/public/storage
+/public/misc
+Homestead.yaml
+Homestead.json
+.env
+.idea
+gallery_widget.code-workspace
