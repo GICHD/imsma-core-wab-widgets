@@ -1,6 +1,8 @@
 # GICHD Gallery
 
-A widget to allow for multiple attachement pictures to be visualised in a popup gallery  
+A widget to allow for multiple attachement pictures to be visualised in a popup gallery.  
+
+Aswell as the ArcGIS Web App Builer modules, this widget makes use of JQuery and the [FancyBox Gallery](https://github.com/fancyapps/fancybox). 
 
 ## Table of Contents
 
@@ -10,7 +12,7 @@ A widget to allow for multiple attachement pictures to be visualised in a popup 
 
 ## Installation
 
-- put it on a web-facing server
+- You can either put it on a web-facing server
 - register the URL to the manifest.json in the arcgis portal you want to use the widget
 - looking in custom widgets
 
