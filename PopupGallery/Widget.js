@@ -31,7 +31,9 @@ function (declare, BaseWidget, $,
       
       // hide widget button
       $("div[title|='" + this.label + "']").hide()
-      
+      const sleep = (milliseconds) => {
+        return new Promise(resolve => setTimeout(resolve, milliseconds))
+      }
       // load settings
       var LayerToAttachId = this.config.layerId
       var services = this.config.layerIds
@@ -93,28 +95,36 @@ var featureLayer = this.map.getLayer(LayerToAttachId)
 
               beforeLoad: function () {
                 console.log('beforeLoad')
+                $('.fancybox-slide--current.fancybox-slide > div > img').addClass('image-hide-temp')
               }, // Before the content of a slide is being loaded
-              afterLoad: function () {
-                console.log('afterLoad')
 
-                EXIF.getData($('.fancybox-image')[0], function () {
-                  var allMetaData = EXIF.getAllTags(this)
-                  $('.fancybox-image').attr('class', 'fancybox-image')
-                  $('.fancybox-image').addClass('rotate-' + allMetaData.Orientation)
+              afterLoad: function (instance, current) {
 
-                  console.log('---------------')
-                  console.log('orientatation', allMetaData.Orientation)
-                  console.log($('.fancybox-image').attr('class'))
-                  console.log('------xxx------')
-                })
               }, // When the content of a slide is done loading
 
-              beforeShow: function () {
-                console.log('beforeshot')
+              beforeShow: function (instance, current) {
+                console.log('beforeshow')
               },
 
-              afterShow: function () {
+              afterShow: function (instance, current) {
                 console.log('afterShow')
+
+                EXIF.getData($('.fancybox-image')[0], function () {
+                  // EXIF.getData($('.fancybox-slide--current'), function () {// ??
+                  var allMetaData = EXIF.getTag(this, 'Orientation')
+
+                  $('.fancybox-slide--current.fancybox-slide > div > img').removeClass('rotate-1 rotate-3 rotate-6 rotate-8')
+                  $('.fancybox-slide--current.fancybox-slide > div > img').addClass('rotate-' + allMetaData)
+
+                  console.log('---------------')
+                  console.log('orientatation', allMetaData)
+                  console.log('------xxx------')
+                })
+
+                sleep(1000).then(() => {
+                  console.log('yo')
+                  $('.fancybox-slide--current.fancybox-slide > div > img').removeClass('image-hide-temp')
+                })
               }, // When content is done loading and animating
               beforeClose: function () {
                 console.log('beforeClose')
@@ -129,7 +139,7 @@ var featureLayer = this.map.getLayer(LayerToAttachId)
                 console.log('console')
               } // When other instance has been activated
             })
-            // ready
+            // ready            
           })
         } else {
           console.log('PopupGallery - selected layer not suitable, not loaded')
