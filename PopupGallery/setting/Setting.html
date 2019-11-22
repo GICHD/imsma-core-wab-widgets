@@ -1,16 +1,12 @@
 <div>
+	<p>Select the layer with image attachments you'd like to see a gallery for.</p>
+	<label>Map Layer</label>
+	<select data-dojo-attach-point="activitiesNode" multiple="true"></select>
+	<div data-dojo-attach-point="unsuitableLayerWarning" id="unsuitableLayerWarning" style="color: red"></div>
 	<p>Select the position of the gallery in the popup.</p>
 	<label>Popup location</label>
 	<select data-dojo-type="dijit/form/Select" id="popupLocationSelect" data-dojo-attach-point="popupLocation" >
 		<option value=1>Top</option>
 		<option value=2>Bottom</option>
 	</select>
-	<p>Select the layer with image attachments you'd like to see a gallery for.</p>
-	<label>Map Layer</label>
-	<select data-dojo-type="dijit/form/Select" id="layerIdselect" data-dojo-attach-point="layerId" >
-		<option value="#">Select</option>
-	</select>
-		<div data-dojo-attach-point="unsuitableLayerWarning" id="unsuitableLayerWarning" style="color: red"></div>
-        <select data-dojo-attach-point="activitiesNode" multiple="true"></select>
-
 </div>

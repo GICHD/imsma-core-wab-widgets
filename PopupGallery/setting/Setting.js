@@ -40,7 +40,7 @@ function (declare, BaseWidgetSetting, MultiSelect, dom, win, domConstruct, Butto
 
     setConfig: function (config) {
       // this.layerId.value = config.layerId
-      WTFBBQ = null,
+      WTFBBQ = false,
       // Get all feature layers from the map
       LayerInfos.getInstance(this.map, this.map.itemInfo)
         .then(lang.hitch(this, function (layerInfosObj) {
@@ -56,9 +56,6 @@ function (declare, BaseWidgetSetting, MultiSelect, dom, win, domConstruct, Butto
               })
             }
           })
-          this.layerId.set('options', options)
-
-          console.log(options)
           for (i in options) {
             var opData = domConstruct.create('option')
             opData.innerHTML = options[i]['label']
@@ -73,13 +70,10 @@ function (declare, BaseWidgetSetting, MultiSelect, dom, win, domConstruct, Butto
             id: 'activitiesMultiS',
             style: 'width:100%;height:100px'
           }, this.activitiesNode).startup()
-
-          console.log('sel is', this.activitiesNode)
           if (options.length < 1) {
             this.unsuitableLayerWarning.innerHTML = 'Current webmap does not contain any suitable layers with attachments.'
-            this.layerId.setDisabled(true) // disable dropdown fr selecting layers for widget
-            //  this.activitiesMultiS.setDisabled(true) // disable dropdown fr selecting layers for widget
-            //TODO Add warning for no layers selected
+
+            // TODO Add warning for no layers selected
           }
         }))
     },
@@ -87,7 +81,6 @@ function (declare, BaseWidgetSetting, MultiSelect, dom, win, domConstruct, Butto
     getConfig: function () {
       // WAB will get config object through this method
       return {
-        layerId: this.layerId.value,
         layerIds: WTFBBQ,
         popupLocation: this.popupLocation.value
       }
