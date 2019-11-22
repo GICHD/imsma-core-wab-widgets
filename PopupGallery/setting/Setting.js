@@ -79,6 +79,7 @@ function (declare, BaseWidgetSetting, MultiSelect, dom, win, domConstruct, Butto
             this.unsuitableLayerWarning.innerHTML = 'Current webmap does not contain any suitable layers with attachments.'
             this.layerId.setDisabled(true) // disable dropdown fr selecting layers for widget
             //  this.activitiesMultiS.setDisabled(true) // disable dropdown fr selecting layers for widget
+            //TODO Add warning for no layers selected
           }
         }))
     },
@@ -87,7 +88,8 @@ function (declare, BaseWidgetSetting, MultiSelect, dom, win, domConstruct, Butto
       // WAB will get config object through this method
       return {
         layerId: this.layerId.value,
-        layerIds: WTFBBQ
+        layerIds: WTFBBQ,
+        popupLocation: this.popupLocation.value
       }
     }
   })

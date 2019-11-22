@@ -35,11 +35,14 @@ function (declare, BaseWidget, $,
       // load settings
       var LayerToAttachId = this.config.layerId
       var services = this.config.layerIds
+        var popupLocation = this.config.popupLocation
       console.log(services)
-
+      console.log(this.config)
       // listen for click event to get objectid
       connect.connect(this.map.infoWindow, 'onSetFeatures', function () {
       //  for (var LayerToAttachId in services) {
+
+      //TODO if not null...
         for (let LayerToAttachId of Object.values(services)) {
 
 var featureLayer = this.map.getLayer(LayerToAttachId)
@@ -63,8 +66,13 @@ var featureLayer = this.map.getLayer(LayerToAttachId)
           featureLayer.queryAttachmentInfos(attributeData.attributes[idfield], function (infos) {
             console.log('querying for image attachments')
             // preparing div for fancybox
-            $('.contentPane').append('<div id="initialImageDiv">No attachments found</div><div id="otherImagesDiv" style="display:none"></div>')
-            // count to show only first image in popup for intiial viewing
+            console.log("wtfbbq",popupLocation)
+            if (popupLocation == 1) {
+              $('.contentPane').prepend('<div id="initialImageDiv">No attachments found</div><div id="otherImagesDiv" style="display:none"></div>')
+            } else {
+              $('.contentPane').append('<div id="initialImageDiv">No attachments found</div><div id="otherImagesDiv" style="display:none"></div>')
+            }
+
             i = 0
             infos.forEach(function (photoInfo) {
               if (i === 0) {
