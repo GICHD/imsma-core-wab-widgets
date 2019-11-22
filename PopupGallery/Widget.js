@@ -1,6 +1,6 @@
 define(['dojo/_base/declare',
   'jimu/BaseWidget',
-  'jimu/loaderplugins/jquery-loader!https://code.jquery.com/jquery-3.4.1.js,https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.js',
+  'jimu/loaderplugins/jquery-loader!https://code.jquery.com/jquery-3.4.1.js,https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.js,https://cdn.jsdelivr.net/npm/exif-js',
   'esri/dijit/Popup', 'esri/dijit/PopupTemplate',
   'dojo/dom-class',
   'dojo/on',  'dojo/_base/array',
@@ -31,7 +31,7 @@ function (declare, BaseWidget, $,
       
       // hide widget button
       $("div[title|='" + this.label + "']").hide()
-
+      
       // load settings
       var LayerToAttachId = this.config.layerId
       var services = this.config.layerIds
@@ -87,14 +87,49 @@ var featureLayer = this.map.getLayer(LayerToAttachId)
               }
             })
 
-            $.fancybox.defaults.thumbs = {
-              autoStart: true,
-              hideOnClose: true,
-              parentEl: '.fancybox-container',
-              axis: 'y'
-            }
-            $.fancybox.defaults.helpers = { 'overlay': null }
-            $('.fancybox').fancybox()
+            $.fancybox.defaults.hash = false
+
+            $('[data-fancybox="gallery"]').fancybox({
+
+              beforeLoad: function () {
+                console.log('beforeLoad')
+              }, // Before the content of a slide is being loaded
+              afterLoad: function () {
+                console.log('afterLoad')
+
+                EXIF.getData($('.fancybox-image')[0], function () {
+                  var allMetaData = EXIF.getAllTags(this)
+                  $('.fancybox-image').attr('class', 'fancybox-image')
+                  $('.fancybox-image').addClass('rotate-' + allMetaData.Orientation)
+
+                  console.log('---------------')
+                  console.log('orientatation', allMetaData.Orientation)
+                  console.log($('.fancybox-image').attr('class'))
+                  console.log('------xxx------')
+                })
+              }, // When the content of a slide is done loading
+
+              beforeShow: function () {
+                console.log('beforeshot')
+              },
+
+              afterShow: function () {
+                console.log('afterShow')
+              }, // When content is done loading and animating
+              beforeClose: function () {
+                console.log('beforeClose')
+              }, // Before the instance attempts to close. Return false to cancel the close.
+              afterClose: function () {
+                console.log('afterClose')
+              }, // After instance has been closed
+              onActivate: function () {
+                console.log('onActivate')
+              }, // When instance is brought to front
+              onDeactivate: function () {
+                console.log('console')
+              } // When other instance has been activated
+            })
+            // ready
           })
         } else {
           console.log('PopupGallery - selected layer not suitable, not loaded')
