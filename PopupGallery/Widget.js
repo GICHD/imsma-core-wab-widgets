@@ -104,11 +104,22 @@ var featureLayer = this.map.getLayer(LayerToAttachId)
 
               beforeShow: function (instance, current) {
                 console.log('beforeshow')
+
+                if ($('.fancybox-toolbar').find('#rotate_button').length === 0) {
+                  $('.fancybox-toolbar').prepend('<button id="rotate_button" class="fancybox-button" title="Rotate Image"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M20 29v-9h1v6.88l1.566-1.076a12.5 12.5 0 1 0-13.923.14l-.716.715A13.494 13.494 0 1 1 29 15.5a13.398 13.398 0 0 1-5.3 10.706L21.36 28H29v1zm-3-15v3h-3v-3zm-1 1h-1v1h1z"/></svg></button>');
+                }
+                var click = 1;
+                $('.fancybox-toolbar').on('click', '#rotate_button', function () {
+                  console.log("rotating")
+                  var n = 90 * ++click;
+                  $('.fancybox-slide--current.fancybox-slide > div > img').css('webkitTransform', 'rotate(-' + n + 'deg)');
+                  $('.fancybox-slide--current.fancybox-slide > div > img').css('mozTransform', 'rotate(-' + n + 'deg)');
+                });
               },
 
               afterShow: function (instance, current) {
                 console.log('afterShow')
-
+/*
                 EXIF.getData($('.fancybox-image')[0], function () {
                   // EXIF.getData($('.fancybox-slide--current'), function () {// ??
                   var allMetaData = EXIF.getTag(this, 'Orientation')
@@ -125,6 +136,8 @@ var featureLayer = this.map.getLayer(LayerToAttachId)
                   console.log('yo')
                   $('.fancybox-slide--current.fancybox-slide > div > img').removeClass('image-hide-temp')
                 })
+
+                */
               }, // When content is done loading and animating
               beforeClose: function () {
                 console.log('beforeClose')
