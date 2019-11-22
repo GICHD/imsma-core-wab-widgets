@@ -66,3 +66,7 @@ package.js
 package.json
 samplewidgets/*
 widgets.d.ts
+*.code-workspace
+imsma-core-wab-widgets/*
+PopupGallery/gruntfile.js
+PopupGallery/package-lock.json

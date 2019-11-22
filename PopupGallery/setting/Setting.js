@@ -57,7 +57,7 @@ function (declare, BaseWidgetSetting, lang, array, _WidgetsInTemplateMixin, Laye
         });
         this.layerId.set('options', options);
 		if(options.length < 1) {
-          this.unsuitableLayerWarning.innerHTML = 'current webmap does not contain any suitable layers with attachments';
+          this.unsuitableLayerWarning.innerHTML = 'Current webmap does not contain any suitable layers with attachments.';
           this.layerId.setDisabled(true) // disable dropdown fr selecting layers for widget
 
         }

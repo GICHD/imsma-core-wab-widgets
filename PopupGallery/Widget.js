@@ -27,9 +27,8 @@ function (declare, BaseWidget, $,
     startup: function () {
       console.log('starting gallery')
       this.inherited(arguments)
-
       // hide widget button
-      $("div[title|='GICHD Popup Gallery']").hide()
+      $("div[title|='"+this.label+"']").hide()
 
       // load settings
       var LayerToAttachId = this.config.layerId
