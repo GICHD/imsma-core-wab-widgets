@@ -1,5 +1,6 @@
 {
 	"configText": "abcdefg",
 	"layerId": "layerid",
+	"layerIds": "fieldname",
 	"fieldName": "fieldname"
 }

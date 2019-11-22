@@ -3,7 +3,8 @@ define(['dojo/_base/declare',
   'jimu/loaderplugins/jquery-loader!https://code.jquery.com/jquery-3.4.1.js,https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.js',
   'esri/dijit/Popup', 'esri/dijit/PopupTemplate',
   'dojo/dom-class',
-  'dojo/on',
+  'dojo/on',  'dojo/_base/array',
+
   'dojo/_base/connect',
   'esri/domUtils',
   'dojo/date/locale',
@@ -15,7 +16,7 @@ function (declare, BaseWidget, $,
   Popup,
   PopupTemplate,
   domClass,
-  on,
+  on,array,
   connect,
   domUtils,
   locale,
@@ -27,18 +28,24 @@ function (declare, BaseWidget, $,
     startup: function () {
       console.log('starting gallery')
       this.inherited(arguments)
+      
       // hide widget button
-      $("div[title|='"+this.label+"']").hide()
+      $("div[title|='" + this.label + "']").hide()
 
       // load settings
       var LayerToAttachId = this.config.layerId
-      console.log('attaching to ', LayerToAttachId)
+      var services = this.config.layerIds
+      console.log(services)
 
       // listen for click event to get objectid
       connect.connect(this.map.infoWindow, 'onSetFeatures', function () {
-        var featureLayer = this.map.getLayer(LayerToAttachId)
+      //  for (var LayerToAttachId in services) {
+        for (let LayerToAttachId of Object.values(services)) {
+
+var featureLayer = this.map.getLayer(LayerToAttachId)
         if (featureLayer && featureLayer.hasAttachments) {
-          var attributeData = this.map.infoWindow.getSelectedFeature()          
+           console.log('attaching:',LayerToAttachId)
+          var attributeData = this.map.infoWindow.getSelectedFeature()
           var fieldlist = featureLayer.fields
 
           for (var i = 0; fieldlist.length; i++) { // TODO make this use number of fields
@@ -56,13 +63,13 @@ function (declare, BaseWidget, $,
           featureLayer.queryAttachmentInfos(attributeData.attributes[idfield], function (infos) {
             console.log('querying for image attachments')
             // preparing div for fancybox
-             $('.contentPane').append('<div id="initialImageDiv">No attachments found</div><div id="otherImagesDiv" style="display:none"></div>')
+            $('.contentPane').append('<div id="initialImageDiv">No attachments found</div><div id="otherImagesDiv" style="display:none"></div>')
             // count to show only first image in popup for intiial viewing
             i = 0
             infos.forEach(function (photoInfo) {
               if (i === 0) {
                 // initialImageDiv append
-				$('#initialImageDiv').html('')
+                $('#initialImageDiv').html('')
 
                 $('#initialImageDiv').append('<a data-fancybox="gallery" href="' + photoInfo.url + '"><img src="' + photoInfo.url + '"></a>')
                 i = 1
@@ -82,8 +89,16 @@ function (declare, BaseWidget, $,
             $('.fancybox').fancybox()
           })
         } else {
-          console.log('gichdGallery - selected layer not suitable, not loaded')
+          console.log('PopupGallery - selected layer not suitable, not loaded')
         }
+
+
+
+
+
+         }
+
+        
       })
     }
 
