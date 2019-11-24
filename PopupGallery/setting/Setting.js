@@ -40,7 +40,7 @@ function (declare, BaseWidgetSetting, MultiSelect, dom, win, domConstruct, Butto
 
     setConfig: function (config) {
       // this.layerId.value = config.layerId
-      WTFBBQ = false,
+      WTFBBQ = false
       // Get all feature layers from the map
       LayerInfos.getInstance(this.map, this.map.itemInfo)
         .then(lang.hitch(this, function (layerInfosObj) {
@@ -56,7 +56,7 @@ function (declare, BaseWidgetSetting, MultiSelect, dom, win, domConstruct, Butto
               })
             }
           })
-          for (i in options) {
+          for (var i in options) {
             var opData = domConstruct.create('option')
             opData.innerHTML = options[i]['label']
             opData.value = options[i]['value']
