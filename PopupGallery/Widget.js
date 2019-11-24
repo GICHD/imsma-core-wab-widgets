@@ -165,12 +165,7 @@ function (declare, BaseWidget, $,
       var services = this.config.layerIds
       var popupLocation = this.config.popupLocation
 
-      // listen for click event to get objectid
-      connect.connect(this.map.infoWindow, 'onSetFeatures', function () {
-        console.log(this.map)
-        bob.call(this)
-      })
-
+    
       connect.connect(this.map.infoWindow, 'onSelectionChange', function () {
         console.log(this.map)
         bob.call(this)
