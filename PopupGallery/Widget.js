@@ -32,6 +32,12 @@ function (declare, BaseWidget, $,
       console.log('starting gallery')
       this.inherited(arguments)
 
+       // load settings
+       var services = this.config.layerIds
+       var popupLocation = this.config.popupLocation
+ 
+     
+
       // hide widget button
       $("div[title|='" + this.label + "']").hide()
 
@@ -46,7 +52,7 @@ function (declare, BaseWidget, $,
           console.log('layers found')
           for (let LayerToAttachId of Object.values(services)) { // TODO: instead of looping through all layers, instead just check clicked layer is in list of selected?
             var featureLayer = this.map.getLayer(LayerToAttachId)
-            if (featureLayer && featureLayer.hasAttachments && this.map.infoWindow.getSelectedFeature()) { // not exactly cleanest of approaches
+            if (featureLayer && featureLayer.hasAttachments && this.map.infoWindow.getSelectedFeature() && this.map.infoWindow.getSelectedFeature()._sourceLayer.id == featureLayer.id) { // not exactly cleanest of approaches
               console.log('attaching:', LayerToAttachId)
               var attributeData = this.map.infoWindow.getSelectedFeature()
 
@@ -161,11 +167,7 @@ function (declare, BaseWidget, $,
         }
       }
 
-      // load settings
-      var services = this.config.layerIds
-      var popupLocation = this.config.popupLocation
-
-    
+     
       connect.connect(this.map.infoWindow, 'onSelectionChange', function () {
         console.log(this.map)
         bob.call(this)
